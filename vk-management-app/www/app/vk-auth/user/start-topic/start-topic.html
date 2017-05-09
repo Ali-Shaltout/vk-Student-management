@@ -1,0 +1,37 @@
+<div class="container">
+	<div class="panel panel-default standart-margin">
+		<div class="panel-body">
+			
+			<div class="row">
+				<div class="col-md-6 text-left">
+					<span ng-bind="::topic.name"></span><br />
+					<span class="grey-anchor">Teacher: {{::topic.teacher}}</span>
+				</div>
+				<span class="green-anchor col-md-6 text-right" ng-bind="::topic.level"></span>
+			</div>
+			<b>Questions:</b>
+			<div ng-repeat="slide in topic.slides" style="display: inline; cursor: pointer;">
+				<b>
+					<span ng-show="topic.slides.indexOf((topic.slides | filter:{'id': activeSlideId}:true)[0]) >= $index"
+						ng-click="backSlide(slide)" style="color: green">{{$index + 1}}</span>
+					<span ng-show="topic.slides.indexOf((topic.slides | filter:{'id': activeSlideId}:true)[0]) < $index" style="color: red">{{$index + 1}}</span>
+				</b>
+			</div>
+			<div ng-repeat="slide in topic.slides track by $index" ng-if="draftSlideId === slide.id">
+				<div class="bordered">
+					<h3 ng-bind="::slide.title"></h3>
+					<div hljs source="::slide.description"></div>
+				</div>
+				<input type="text" ng-model="slide.answer" class="form-control" placeholder="answer" style="margin-top: 5px;" />
+				<div class="row">
+					<div class="col-md-6 text-left">
+						<input type="submit" class="btn btn-primary btn-big" value="Next Question" ng-disabled="!slide.answer || draftSlideId !== activeSlideId || topic.isTopicFinished" ng-click="nextSlide($index)" style="margin-top: 5px;" />
+					</div>
+					<div class="col-md-6 text-right">
+						<input type="submit" class="btn btn-warning btn-big" value="Quit" ng-click="back()" style="margin-top: 5px;" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

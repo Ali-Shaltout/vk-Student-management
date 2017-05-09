@@ -1,0 +1,68 @@
+<div class="container">
+	<div class="panel panel-default standart-margin">
+		<div class="panel-body">
+			<h2>Registration</h2>
+			<hr />
+			<h4 class="inline-error" ng-bind="errors['errorHeader']"></h4>
+			<form name="registerForm" class="form-horizontal">
+				<div class="form-group" ng-class="{ 'has-error' : errors['roleId'] }">
+					<b class="col-md-2 control-label">Role*</b>
+					<div class="col-md-10">
+						<div class="btn-group">
+							<div class="dropdown">
+								<button class="btn btn-default dropdown-toggle form-control" type="button" ng-click="listRoleClassifiers()">
+									{{roleName}}
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li ng-repeat="role in roleClassifiers"><a ng-click="roleClassifierClick(role); errors['roleId']=null;" style="cursor: pointer;" ng-bind="role.name"></a></li>
+								</ul>
+							</div>
+							<span class="inline-error" ng-bind="errors['roleId']"></span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : errors['firstname'] }">
+					<b class="col-md-2 control-label">Firstname*</b>
+					<div class="col-md-10">
+						<input type="text" ng-model="firstname" ng-change="errors['firstname']=null" class="form-control" />
+						<span class="inline-error" ng-bind="errors['firstname']"></span>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : errors['lastname'] }">
+					<b class="col-md-2 control-label">Lastname*</b>
+					<div class="col-md-10">
+						<input type="text" ng-model="lastname" ng-change="errors['lastname']=null" class="form-control" />
+						<span class="inline-error" ng-bind="errors['lastname']"></span>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : errors['email'] }">
+					<b class="col-md-2 control-label">Email*</b>
+					<div class="col-md-10">
+						<input type="text" ng-model="email" ng-change="errors['email']=null" class="form-control" />
+						<span class="inline-error" ng-bind="errors['email']"></span>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : errors['password'] }">
+					<b class="col-md-2 control-label">Password*</b>
+					<div class="col-md-10">
+						<input type="password" ng-model="password" ng-change="errors['password']=null" class="form-control" />
+						<span class="inline-error" ng-bind="errors['password']"></span>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : errors['confirmPassword'] }">
+					<b class="col-md-2 control-label">Confirm Password*</b>
+					<div class="col-md-10">
+						<input type="password" ng-model="confirmPassword" ng-change="errors['confirmPassword']=null" class="form-control" />
+						<span class="inline-error" ng-bind="errors['confirmPassword']"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-10">
+						<input type="submit" class="btn btn-default" value="Register" ng-click="submitRegister()" />
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

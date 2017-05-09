@@ -1,0 +1,236 @@
+<div class="container">
+	<div class="panel panel-default standart-margin">
+		<div class="panel-body">
+			<tabset>
+                <tab ng-init="getStudentMain()" ng-click="getStudentMain()">
+                    <tab-heading>Main</tab-heading>
+					<h1 class="text-center">Start a new lecture</h1>
+					<h4 class="text-center">You may use filters to find your intresting material faster.</h4>
+					<div class="container">
+						<div class="col-md-4">
+							<label class="control-label">Programming language</label>
+							<i style="cursor: pointer;" ng-click="programmingLanguageRemoveFilterClick()">(remove filter)</i>
+							<div class="dropdown">
+								<button class="btn btn-default dropdown-toggle form-control" type="button" ng-click="listProgrammingLanguageClassifiers()">
+									{{programmingLanguageName}}
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li ng-repeat="programmingLanguage in programmingLanguageClassifiers">
+										<a ng-click="programmingLanguageFilterClick(programmingLanguage)" style="cursor: pointer;" ng-bind="programmingLanguage.name"></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<label class="control-label">Lecturer</label>
+							<i style="cursor: pointer;" ng-click="lecturerRemoveFilterClick()">(remove filter)</i>
+							<div class="dropdown">
+								<button class="btn btn-default dropdown-toggle form-control" type="button" ng-click="listLecturerClassifiers()">
+									{{lecturerName}}
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li ng-repeat="lecturer in lecturerClassifiers">
+										<a ng-click="lecturerFilterClick(lecturer)" style="cursor: pointer;" ng-bind="lecturer"></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<label class="control-label">Level</label>
+							<i style="cursor: pointer;" ng-click="levelRemoveFilterClick()">(remove filter)</i>
+							<div class="dropdown">
+								<button class="btn btn-default dropdown-toggle form-control" type="button" ng-click="listLevelClassifiers()">
+									{{levelName}}
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li ng-repeat="level in levelClassifiers">
+										<a ng-click="levelFilterClick(level)" style="cursor: pointer;" ng-bind="level.name"></a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="container bordered text-center"
+						ng-repeat="lesson in filteredLessons = (lessons | filter : {level: levelName, programmingLanguage: programmingLanguageName, teacher: lecturerName}) | limitTo:3:3*(lessonPage-1)">
+						<div class="col-md-4">
+							<h4 ng-bind="::lesson.programmingLanguage"></h4>
+							<div class="grey-anchor" ng-bind="::lesson.teacher"></div>
+						</div>
+						<div class="col-md-4">
+							<h4 ng-bind="::lesson.name"></h4>
+							<h5 ng-bind="::lesson.description"></h5>
+							<div class="green-anchor" ng-bind="::lesson.level"></div>
+						</div>
+						<div class="col-md-4">
+							<h5></h5>
+							<input type="submit" class="btn btn-primary btn-big" value="Start" ng-click="startLesson(lesson)" />
+						</div>
+					</div>
+					<h1 ng-if="filteredLessons.length === 0 && lessons.length !== 0" class="text-center">No lessons according yours filter.</h1>
+					<h1 ng-if="lessons.length === 0" class="text-center">No new lessons to start. Sorry come back later!</h1>
+					<pagination ng-show="lessons.length > 0" class="pagination-sm pagination" total-items="filteredLessons.length" ng-model="lessonPage"
+						previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page=3></pagination>
+					<hr />
+					<h1 class="text-center">My Lessons</h1>
+					<div class="container bordered text-center" ng-repeat="lesson in userLessons | limitTo:3:3*(userLessonPage-1)">
+						<div class="col-md-4">
+							<h4 ng-bind="::lesson.programmingLanguage"></h4>
+							<div class="grey-anchor" ng-bind="::lesson.teacher"></div>
+						</div>
+						<div class="col-md-4">
+							<h4 ng-bind="::lesson.name"></h4>
+							<h5 ng-bind="::lesson.description"></h5>
+							<div class="green-anchor" ng-bind="::lesson.level"></div>
+							<div class="green-anchor" style="font-size: 18px;" ng-if="::lesson.isFinished">LESSON FINISHED</div>
+						</div>
+						<div class="col-md-4">
+							<h5></h5>
+							<input type="submit" class="btn btn-primary btn-big" value="Start" ng-click="startLesson(lesson)" />
+						</div>
+					</div>
+					<pagination class="pagination-sm pagination" total-items="userLessons.length" ng-model="userLessonPage"
+						previous-text="&lsaquo;" next-text="&rsaquo;" items-per-page=3></pagination>
+				</tab>
+				<tab ng-if="user.role === 'Lecturer'" ng-click="getTeacherMain()">
+                    <tab-heading>Lecturer Zone</tab-heading>
+					<div class="container">
+						<div class="col-md-4">
+
+						</div>
+						<div class="col-md-4">
+							<h1 class="text-center">My Lessons</h1>
+						</div>
+						<div class="col-md-4 text-right">
+							<h5></h5>
+							<input type="submit" class="btn btn-success btn-big" value="Create Lesson" ng-click="createLesson()" />
+						</div>
+					</div>
+					<div class="container bordered text-center" ng-repeat="lesson in lessons">
+						<div class="col-md-6 text-left">
+							<h4 ng-bind="::lesson.programmingLanguage"></h4>
+							<h4 ng-bind="::lesson.name"></h4>
+							<div class="green-anchor" ng-bind="::lesson.level"></div>
+						</div>
+						<div class="col-md-6 text-right">
+							<h5></h5>
+							<input type="submit" class="btn btn-primary btn-big" value="{{lesson.isPublished ? 'Unpublish' : 'Publish'}}" ng-click="setLessonPublishState(lesson)" />
+							<input type="submit" class="btn btn-primary btn-big" value="Edit" ng-click="editLesson(lesson)" />
+							<input type="submit" class="btn btn-primary btn-big" value="Delete" ng-click="deleteLesson(lesson)" />
+						</div>
+					</div>
+				</tab>
+				<tab ng-click="getProfileMain()">
+                    <tab-heading>Profile</tab-heading>
+					<div class="container">
+						<div class="col-sm-3 col-md-3">
+							<h4>{{user.role}}</h4>
+							<h5>{{user.firstname}} {{user.lastname}}</h5>
+							<div>
+								<a ng-click="profileFieldset = 'change_personal_info'">Change personal info</a>
+							</div>
+							<div>
+								<a ng-click="profileFieldset = 'change_password'">Change password</a>
+							</div>
+						</div>
+						<div class="col-sm-9 col-md-9">
+							<div ng-show="profileFieldset === 'account_information'">
+								<h4>Account information</h4>
+								<div class="container" style="margin-left: -30px;">
+									<!-- <div class="col-md-6"> -->
+										<!-- <div>Last login: 2017-02-12 19:00</div> -->
+									<!-- </div> -->
+									<div class="col-md-6">
+										<div>Account created: {{user.createdAt}}</div>
+									</div>
+								</div>
+								<!-- <div class="container" style="margin-left: -30px;"> -->
+									<!-- <div class="col-md-6"> -->
+										<!-- <b>Unfinished lessons: 1</b> -->
+									<!-- </div> -->
+									<!-- <div class="col-md-6"> -->
+										<!-- <b>Finished lessons: 10</b> -->
+									<!-- </div> -->
+								<!-- </div> -->
+								<!-- <h4 style="margin-top: 15px;">Statistics</h4> -->
+								<!-- <div class="container" style="margin-left: -30px;"> -->
+									<!-- <div class="col-md-6"> -->
+										<!-- <b>BIG statistics</b> -->
+									<!-- </div> -->
+									<!-- <div class="col-md-6"> -->
+										<!-- <b>BIG statistics</b> -->
+									<!-- </div> -->
+								<!-- </div> -->
+							</div>
+							<div ng-show="profileFieldset === 'change_password'">
+								<h4>Change password</h4>
+								<h4 class="inline-error" ng-bind="errors['headerError']"></h4>
+								<div class="container form-horizontal" style="margin-left: -15px;">
+									<div class="form-group" ng-class="{ 'has-error' : errors['oldPassword'] }">
+										<b class="col-md-3 control-label">Old password</b>
+										<div class="col-md-9">
+											<input type="password" ng-model="oldPassword" ng-change="errors['oldPassword']=null" class="form-control" />
+											<span class="inline-error" ng-bind="errors['oldPassword']"></span>
+										</div>
+									</div>
+									<div class="form-group" ng-class="{ 'has-error' : errors['newPassword'] }">
+										<b class="col-md-3 control-label">New password</b>
+										<div class="col-md-9">
+											<input type="password" ng-model="newPassword" ng-change="errors['newPassword']=null" class="form-control" />
+											<span class="inline-error" ng-bind="errors['newPassword']"></span>
+										</div>
+									</div>
+									<div class="form-group" ng-class="{ 'has-error' : errors['confirmPassword'] }">
+										<b class="col-md-3 control-label">Confirm password</b>
+										<div class="col-md-9">
+											<input type="password" ng-model="confirmPassword" ng-change="errors['confirmPassword']=null" class="form-control" />
+											<span class="inline-error" ng-bind="errors['confirmPassword']"></span>
+										</div>
+									</div>
+									<div class="form-group col-md-12">
+										<input type="submit" class="btn btn-default" value="Change" ng-click="changePassword(oldPassword, newPassword, confirmPassword)" />
+										<input type="submit" class="btn btn-default" value="Back" ng-click="profileFieldset = 'account_information'" />
+									</div>
+								</div>
+							</div>
+							<div ng-show="profileFieldset === 'change_personal_info'">
+								<h4>Change personal info</h4>
+								<div class="container form-horizontal" style="margin-left: -15px;">
+									<div class="form-group" ng-class="{ 'has-error' : errors['firstname'] }">
+										<b class="col-md-3 control-label">Name</b>
+										<div class="col-md-9">
+											<input type="text" ng-model="firstname" ng-change="errors['firstname']=null" class="form-control" />
+											<span class="inline-error" ng-bind="errors['firstname']"></span>
+										</div>
+									</div>
+									<div class="form-group" ng-class="{ 'has-error' : errors['lastname'] }">
+										<b class="col-md-3 control-label">Last name</b>
+										<div class="col-md-9">
+											<input type="text" ng-model="lastname" ng-change="errors['lastname']=null" class="form-control" />
+											<span class="inline-error" ng-bind="errors['lastname']"></span>
+										</div>
+									</div>
+									<div class="form-group" ng-class="{ 'has-error' : errors['email'] }">
+										<b class="col-md-3 control-label">Email</b>
+										<div class="col-md-9">
+											<input type="text" ng-model="email" ng-change="errors['email']=null" class="form-control" />
+											<span class="inline-error" ng-bind="errors['email']"></span>
+										</div>
+									</div>
+									<div class="form-group col-md-12">
+										<input type="submit" class="btn btn-default" value="Change" ng-click="changePersonalInfo(firstname, lastname, email)" />
+										<input type="submit" class="btn btn-default" value="Back" ng-click="profileFieldset = 'account_information'" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</tab>
+			</tabset>
+		</div>
+	</div>
+</div>
+
+

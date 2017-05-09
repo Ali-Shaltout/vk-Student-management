@@ -1,0 +1,23 @@
+<div class="container">
+	<div class="panel panel-default standart-margin">
+		<div class="panel-body">
+			<div class="text-center">
+				<h4 ng-bind="::lesson.name"></h4>
+				<h5 ng-bind="::lesson.description"></h5>
+				<div class="green-anchor" ng-bind="::lesson.level"></div>
+				<span class="grey-anchor">Teacher: {{::lesson.teacher}}</span>
+			</div>
+			<input type="submit" class="btn btn-default btn-big" value="Back to main" ng-click="back();" />
+			<div class="container bordered" ng-repeat="topic in lesson.topics">
+				<div class="col-md-8">
+					<h4 ng-bind="::topic.name"></h4>
+					<div>Slides: {{::topic.userSlidesLength}}/{{::topic.slidesLength}}</div>
+				</div>
+				<div class="col-md-4 text-right">
+					<h5></h5>
+					<input type="submit" class="btn btn-primary btn-big" value="Enter" ng-disabled="::!topic.isEnabled" ng-click="startTopic(topic.id)" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,80 @@
+<div class="container">
+	<div class="panel panel-default standart-margin">
+		<div class="panel-body">
+			<div>
+				<h4>Change lesson information</h4>
+				<div class="container form-horizontal" style="margin-left: -15px;">
+					<div class="form-group" ng-class="{ 'has-error' : errors['name'] }">
+						<b class="col-md-3 control-label">Name*</b>
+						<div class="col-md-9">
+							<input type="text" ng-model="lesson.name" ng-change="errors['name']=null" class="form-control" />
+							<span class="inline-error" ng-bind="errors['name']"></span>
+						</div>
+					</div>
+					<div class="form-group" ng-class="{ 'has-error' : errors['description'] }">
+						<b class="col-md-3 control-label">Description*</b>
+						<div class="col-md-9">
+							<input type="text" ng-model="lesson.description" ng-change="errors['description']=null" class="form-control" />
+							<span class="inline-error" ng-bind="errors['description']"></span>
+						</div>
+					</div>
+					<div class="form-group" ng-class="{ 'has-error' : errors['programmingLanguageId'] }">
+						<b class="col-md-3 control-label">Programming language*</b>
+						<div class="col-md-9">
+							<div class="btn-group">
+								<div class="dropdown">
+									<button class="btn btn-default dropdown-toggle form-control" type="button" ng-click="listProgrammingLanguageClassifiers()">
+										{{lesson.programmingLanguageName}}
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li ng-repeat="programmingLanguage in programmingLanguageClassifiers"><a ng-click="lesson.programmingLanguageId=programmingLanguage.id; lesson.programmingLanguageName=programmingLanguage.name; errors['programmingLanguageId']=null;" style="cursor: pointer;" ng-bind="programmingLanguage.name"></a></li>
+									</ul>
+								</div>
+								<span class="inline-error" ng-bind="errors['programmingLanguageId']"></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" ng-class="{ 'has-error' : errors['levelId'] }">
+						<b class="col-md-3 control-label">Level*</b>
+						<div class="col-md-9">
+							<div class="btn-group">
+								<div class="dropdown">
+									<button class="btn btn-default dropdown-toggle form-control" type="button" ng-click="listLevelClassifiers()">
+										{{lesson.levelName}}
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li ng-repeat="level in levelClassifiers"><a ng-click="lesson.levelId=level.id; lesson.levelName=level.name; errors['levelId']=null;" style="cursor: pointer;" ng-bind="level.name"></a></li>
+									</ul>
+								</div>
+								<span class="inline-error" ng-bind="errors['levelId']"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<input type="submit" class="btn btn-default" value="Change" ng-click="changeLessonInformation()" />
+					<input type="submit" class="btn btn-default" value="Back" ng-click="back()" />
+				</div>
+				<div class="form-group col-md-6 text-right">
+					<input type="submit" class="btn btn-success" value="Create Topic" ng-click="createTopic(lesson.id)" />
+				</div>
+			</div>
+			<div class="container bordered" ng-repeat="topic in lesson.topics">
+				<div class="col-md-6">
+					<h4 ng-bind="::topic.name"></h4>
+					<div>Slides: {{::topic.Slides.length}}</div>
+				</div>
+				<div class="col-md-6 text-right">
+					<h5></h5>
+					<input type="submit" class="btn btn-primary btn-big" value="{{topic.isPublished ? 'Unpublish' : 'Publish'}}" ng-click="setTopicPublishState(topic)" />
+					<input type="submit" class="btn btn-primary btn-big" value="Edit" ng-click="editTopic(topic)" />
+					<input type="submit" class="btn btn-primary btn-big" value="Delete" ng-click="deleteTopic(topic)" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

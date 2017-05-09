@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html data-ng-app="vk-auth" lang="en">
+<head>
+    <meta name="fragment" content="#!"> 
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>VK-AUTH</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="language" content="en">
+	<script type="text/javascript" src="../scripts/angular.min.js"></script>
+	<script type="text/javascript" src="../scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+	<script type="text/javascript" src="../scripts/angular-route.min.js"></script>
+	<script type="text/javascript" src="../scripts/angular-local-storage.min.js"></script>
+	<script type="text/javascript" src="../scripts/highlight.min.js"></script>
+	<script type="text/javascript" src="../scripts/angular-highlightjs.min.js"></script>
+	<script type="text/javascript" src="/app/app.js"></script>
+	<script type="text/javascript" src="/app/services/http.service.js"></script>
+	<script type="text/javascript" src="/app/directives/elastic.directive.js"></script>
+	<script type="text/javascript" src="/app/vkApp/404/404.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/home/home.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/login/login.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/logout/logout.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/register/register.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/user/main/main.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/user/start-lesson/start-lesson.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/user/create-lesson/create-lesson.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/user/edit-lesson/edit-lesson.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/user/start-topic/start-topic.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/user/create-topic/create-topic.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/user/edit-topic/edit-topic.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/user/create-slide/create-slide.controller.js"></script>
+	<script type="text/javascript" src="/app/vkApp/user/edit-slide/edit-slide.controller.js"></script>
+    <link rel="stylesheet" type="text/css" href="../content/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../content/highlightjs.min.css"/>
+	<link rel="stylesheet" type="text/css" href="../content/site.css"/>
+	<link rel="stylesheet" type="text/css" href="../content/style.css"/>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+				<a href="/" class="navbar-brand">VK-AUTH</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li ng-if="!user"><a href="/login">Login</a></li>
+					<li ng-if="!user"><a href="/register">Register</a></li>
+					<li ng-if="user"><a href="/user/main">{{user.firstname}} Profile</a></li>
+					<li ng-if="user"><a href="/user/logout">Logout</a></li>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <span us-spinner="{radius:30, width:8, length: 16}"></span>
+		<div data-ng-view=""></div>
+        <footer class="footer">
+
+        </footer>
+    </div>
+</body>
+</html>

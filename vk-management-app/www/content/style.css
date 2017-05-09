@@ -1,0 +1,48 @@
+﻿.standart-margin {
+	margin-top: 15px;
+}
+
+.grey-anchor {
+	color: rgba(0, 0, 0, 0.25);
+	font-size: 14px;
+}
+
+.green-anchor {
+	color: #5ce923;
+	font-size: 12px;
+}
+
+.btn-big {
+	width: 150px;
+}
+
+.bordered {
+	margin-top: 15px;
+	border:1px solid #cecece;
+}
+
+.inline-error {
+	color: #a94442;
+}
+
+.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+	color: #a94442;
+}
+
+.dropdown > .btn > .caret {
+  float: right;
+  margin: 6px 0;
+}
+
+pre {
+  background-color: transparent;
+}
+.navbar{
+    background-color: #3498db;
+    padding: .2em;
+    font-size: x-large;
+    margin: 0 auto;
+}
+.nav navbar-nav a{
+	color: #bce8f1;
+}

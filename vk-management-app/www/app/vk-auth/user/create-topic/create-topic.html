@@ -1,0 +1,29 @@
+<div class="container">
+	<div class="panel panel-default standart-margin">
+		<div class="panel-body">
+			<div>
+				<h4>Change topic information</h4>
+				<div class="container form-horizontal" style="margin-left: -15px;">
+					<div class="form-group" ng-class="{ 'has-error' : errors['name'] }">
+						<b class="col-md-3 control-label">Name*</b>
+						<div class="col-md-9">
+							<input type="text" ng-model="topic.name" ng-change="errors['name']=null" class="form-control" />
+							<span class="inline-error" ng-bind="errors['name']"></span>
+						</div>
+					</div>
+					<div class="form-group" ng-class="{ 'has-error' : errors['sequenceNumber'] }">
+						<b class="col-md-3 control-label">Sequence number*</b>
+						<div class="col-md-9">
+							<input type="text" ng-model="topic.sequenceNumber" ng-change="errors['sequenceNumber']=null" class="form-control" />
+							<span class="inline-error" ng-bind="errors['sequenceNumber']"></span>
+						</div>
+					</div>
+					<div class="form-group col-md-12">
+						<input type="submit" class="btn btn-default" value="Add" ng-click="createTopic()" />
+						<input type="submit" class="btn btn-default" value="Back" ng-click="back()" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="authentication"
+    targetNamespace="http://localhost:8000/authentication"
+    xmlns="http://localhost:8000/authentication"
+    xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+    <wsdl:message name="promiseRequest">
+        <wsdl:part name="email" type="xs:string"/>
+        <wsdl:part name="password" type="xs:string"/>
+    </wsdl:message>
+
+    <wsdl:message name="promiseResponse">
+        <wsdl:part name="formatedText" type="xs:string"/>
+    </wsdl:message>
+
+    <wsdl:portType name="promiseBank">
+
+        <wsdl:operation name="memorize">
+            <wsdl:input message="promiseRequest"/>
+            <wsdl:output message="promiseResponse"/>
+        </wsdl:operation>
+
+    </wsdl:portType>
+
+    <wsdl:binding name="promiseBankSoapBinding" type="promiseBank">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        <wsdl:operation name="memorize">
+            <soap:operation soapAction="memorize"/>
+            <wsdl:input>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        
+    </wsdl:binding>
+    <wsdl:service name="authService">
+        <wsdl:port binding="promiseBankSoapBinding" name="authPort">
+            <soap:address location="http://localhost:8001/auth"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
